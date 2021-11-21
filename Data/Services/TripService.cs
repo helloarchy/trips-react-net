@@ -27,7 +27,7 @@ namespace Trips.Data.Services
 
         public void AddTrip(Trip trip)
         {
-            throw new System.NotImplementedException();
+            Data.Trips.Add(trip);
         }
     }
 }
