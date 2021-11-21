@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
+import { NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export class Trips extends Component {
   constructor(props) {
@@ -47,7 +49,13 @@ export class Trips extends Component {
                 <td>
                   {trip.dateCompleted ? new Date(trip.dateCompleted).toLocaleDateString() : ' - '}
                 </td>
-                <td> - </td>
+                <td>
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to={`/Update/${trip.id}`}>
+                      Update
+                    </NavLink>
+                  </NavItem>
+                </td>
               </tr>
             );
           })}
