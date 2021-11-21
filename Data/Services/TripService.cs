@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Trips.Data.Models;
 
 namespace Trips.Data.Services
 {
     public class TripService : ITripService
     {
-        public List<Trip> GetAllTrips()
-        {
-            throw new System.NotImplementedException();
-        }
+        public List<Trip> GetAllTrips() => Data.Trips.ToList();
 
         public Trip GetTripById(int tripId)
         {
