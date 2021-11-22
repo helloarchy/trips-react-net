@@ -10,6 +10,7 @@ export class Update extends Component {
     this.onChangeDateStarted = this.onChangeDateStarted.bind(this);
     this.onChangeDateCompleted = this.onChangeDateCompleted.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onUpdateCancel = this.onUpdateCancel.bind(this);
 
     this.state = {
       name: '',
@@ -27,8 +28,8 @@ export class Update extends Component {
       this.setState({
         name: response.name,
         description: response.description,
-        dateStarted: new Date(response.dateStarted).toLocaleDateString,
-        dateCompleted: new Date(response.dateCompleted).toLocaleDateString
+        dateStarted: new Date(response.dateStarted).toISOString().slice(0, 10),
+        dateCompleted: new Date(response.dateCompleted).toISOString().slice(0, 10)
       });
     });
   }
@@ -57,12 +58,16 @@ export class Update extends Component {
     });
   }
 
+  onUpdateCancel() {
+    const {history} = this.props;
+    history.push("/trips")
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const { history } = this.props;
 
     let tripObject = {
-      Id: Math.floor(Math.random() * 1000),
       Name: this.state.name,
       Description: this.state.description,
       DateStarted: this.state.dateStarted,
@@ -125,7 +130,8 @@ export class Update extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Add trip" className="btn btn-primary" />
+            <button onClick={this.onUpdateCancel} className={"btn btn-default"}>Cancel</button>
+            <button type={"submit"} className={"btn btn-success"}>Update</button>
           </div>
         </form>
       </div>
