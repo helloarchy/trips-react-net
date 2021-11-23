@@ -29,7 +29,9 @@ export class Update extends Component {
         name: response.name,
         description: response.description,
         dateStarted: new Date(response.dateStarted).toISOString().slice(0, 10),
-        dateCompleted: new Date(response.dateCompleted).toISOString().slice(0, 10)
+        dateCompleted: response.dateCompleted
+          ? new Date(response.dateCompleted).toISOString().slice(0, 10)
+          : null
       });
     });
   }
@@ -69,10 +71,10 @@ export class Update extends Component {
     const { id } = this.props.match.params;
 
     let tripObject = {
-      Name: this.state.name,
-      Description: this.state.description,
-      DateStarted: new Date(this.state.dateStarted).toLocaleDateString(),
-      DateCompleted: this.state.dateCompleted
+      name: this.state.name,
+      description: this.state.description,
+      dateStarted: new Date(this.state.dateStarted).toISOString(),
+      dateCompleted: this.state.dateCompleted
         ? new Date(this.state.dateCompleted).toISOString()
         : null
     };
@@ -85,7 +87,7 @@ export class Update extends Component {
   render() {
     return (
       <div className="trip-form">
-        <h3>Update trip {this.state.id}</h3>
+        <h3>Update trip</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Trip name: </label>
