@@ -9,8 +9,8 @@ export class Update extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDateStarted = this.onChangeDateStarted.bind(this);
     this.onChangeDateCompleted = this.onChangeDateCompleted.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.onUpdateCancel = this.onUpdateCancel.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       name: '',
@@ -59,22 +59,25 @@ export class Update extends Component {
   }
 
   onUpdateCancel() {
-    const {history} = this.props;
-    history.push("/trips")
+    const { history } = this.props;
+    history.push('/trips');
   }
 
   onSubmit(e) {
     e.preventDefault();
     const { history } = this.props;
+    const { id } = this.props.match.params;
 
     let tripObject = {
       Name: this.state.name,
       Description: this.state.description,
-      DateStarted: this.state.dateStarted,
+      DateStarted: new Date(this.state.dateStarted).toLocaleDateString(),
       DateCompleted: this.state.dateCompleted
+        ? new Date(this.state.dateCompleted).toISOString()
+        : null
     };
 
-    axios.post('api/Trips/AddTrip', tripObject).then((result) => {
+    axios.put(`api/Trips/UpdateTrip/${id}`, tripObject).then((result) => {
       history.push('/trips');
     });
   }
@@ -82,7 +85,7 @@ export class Update extends Component {
   render() {
     return (
       <div className="trip-form">
-        <h3>Update trip {this.state.name}</h3>
+        <h3>Update trip {this.state.id}</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Trip name: </label>
@@ -130,8 +133,12 @@ export class Update extends Component {
           </div>
 
           <div className="form-group">
-            <button onClick={this.onUpdateCancel} className={"btn btn-default"}>Cancel</button>
-            <button type={"submit"} className={"btn btn-success"}>Update</button>
+            <button onClick={this.onUpdateCancel} className={'btn btn-default'}>
+              Cancel
+            </button>
+            <button type="submit" className={'btn btn-success'}>
+              Update
+            </button>
           </div>
         </form>
       </div>

@@ -1,16 +1,21 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 export class Trips extends Component {
   constructor(props) {
     super(props);
 
+    this.onTripUpdate = this.onTripUpdate.bind(this);
+
     this.state = {
       trips: [],
       loading: true
     };
+  }
+
+  onTripUpdate(id) {
+    const { history } = this.props;
+    history.push(`/update/${id}`);
   }
 
   componentDidMount() {
@@ -50,11 +55,11 @@ export class Trips extends Component {
                   {trip.dateCompleted ? new Date(trip.dateCompleted).toLocaleDateString() : ' - '}
                 </td>
                 <td>
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to={`/Update/${trip.id}`}>
+                  <div className="form-group">
+                    <button onClick={() => this.onTripUpdate(trip.id)} className="btn btn-success">
                       Update
-                    </NavLink>
-                  </NavItem>
+                    </button>
+                  </div>
                 </td>
               </tr>
             );
