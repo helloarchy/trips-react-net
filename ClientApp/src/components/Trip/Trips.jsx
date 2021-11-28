@@ -18,16 +18,6 @@ export class Trips extends Component {
     };
   }
 
-  onTripUpdate(id) {
-    const { history } = this.props;
-    history.push(`/update/${id}`);
-  }
-
-  onTripDelete(id) {
-    const { history } = this.props;
-    history.push(`/delete/${id}`);
-  }
-
   componentDidMount() {
     this.props.getAllTrips();
   }
@@ -36,6 +26,16 @@ export class Trips extends Component {
     if (prevProps.trips.data !== this.props.trips.data) {
       this.setState({ trips: this.props.trips.data });
     }
+  }
+
+  onTripUpdate(id) {
+    const { history } = this.props;
+    history.push(`/update/${id}`);
+  }
+
+  onTripDelete(id) {
+    const { history } = this.props;
+    history.push(`/delete/${id}`);
   }
 
   renderAllTripsTable(trips) {

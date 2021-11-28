@@ -37,7 +37,7 @@ export class Delete extends Component {
     history.push('/trips');
   }
 
-  onConfirm() {
+  onConfirm(e) {
     const { id } = this.props.match.params;
     const { history } = this.props;
 

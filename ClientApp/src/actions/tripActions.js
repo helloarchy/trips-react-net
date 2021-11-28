@@ -19,7 +19,7 @@ export const getAllTrips = () => (dispatch) => {
     type: GET_ALL_TRIPS_REQUEST
   });
   return axios
-    .get('api/api/Trips/GetTrips')
+    .get('api/Trips/GetTrips')
     .then((res) => {
       const response = res.data;
       dispatch(getTripsSuccess(response));
