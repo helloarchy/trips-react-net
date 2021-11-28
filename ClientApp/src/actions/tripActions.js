@@ -8,3 +8,24 @@ const getTripsSuccess = (payload) => ({
   type: GET_ALL_TRIPS_SUCCESS,
   payload
 });
+
+const getTripsError = (payload) => ({
+  type: GET_ALL_TRIPS_ERROR,
+  payload
+});
+
+export const getAllTrips = () => (dispatch) => {
+  dispatch({
+    type: GET_ALL_TRIPS_REQUEST
+  });
+  return axios
+    .get('api/api/Trips/GetTrips')
+    .then((res) => {
+      const response = res.data;
+      dispatch(getTripsSuccess(response));
+    })
+    .catch((error) => {
+      dispatch(getTripsError('Something went wrong'));
+      return Promise.reject({});
+    });
+};
