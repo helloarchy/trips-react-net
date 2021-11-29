@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 export class Delete extends Component {
@@ -6,7 +6,7 @@ export class Delete extends Component {
     super(props);
 
     this.onCancel = this.onCancel.bind(this);
-    this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmation = this.onConfirmation.bind(this);
 
     this.state = {
       name: '',
@@ -19,8 +19,9 @@ export class Delete extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    axios.get(`api/Trips/SingleTrip/${id}`).then((result) => {
-      const response = result.data;
+    axios.get('api/Trips/SingleTrip/' + id).then((trip) => {
+      const response = trip.data;
+
       this.setState({
         name: response.name,
         description: response.description,
@@ -37,11 +38,11 @@ export class Delete extends Component {
     history.push('/trips');
   }
 
-  onConfirm(e) {
+  onConfirmation(e) {
     const { id } = this.props.match.params;
     const { history } = this.props;
 
-    axios.delete(`api/Trips/DeleteTrip/${id}`).then((result) => {
+    axios.delete('api/Trips/DeleteTrip/' + id).then((result) => {
       history.push('/trips');
     });
   }
@@ -50,15 +51,14 @@ export class Delete extends Component {
     return (
       <div style={{ marginTop: 10 }}>
         <h2>Delete trip confirmation</h2>
-
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">{this.state.name}</h4>
-            <p className="card-text">{this.state.description}</p>
-            <button className="btn btn-default" onClick={this.onCancel}>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"> {this.state.name} </h4>
+            <p class="card-text"> {this.state.description} </p>
+            <button onClick={this.onCancel} class="btn btn-default">
               Cancel
             </button>
-            <button className="btn btn-danger" onClick={this.onConfirm}>
+            <button onClick={this.onConfirmation} class="btn btn-danger">
               Confirm
             </button>
           </div>

@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 export const GET_ALL_TRIPS_REQUEST = 'GET_ALL_TRIPS_REQUEST';
 export const GET_ALL_TRIPS_SUCCESS = 'GET_ALL_TRIPS_SUCCESS';
@@ -15,9 +15,7 @@ const getTripsError = (payload) => ({
 });
 
 export const getAllTrips = () => (dispatch) => {
-  dispatch({
-    type: GET_ALL_TRIPS_REQUEST
-  });
+  dispatch({ type: GET_ALL_TRIPS_REQUEST });
   return axios
     .get('api/Trips/GetTrips')
     .then((res) => {
@@ -25,7 +23,7 @@ export const getAllTrips = () => (dispatch) => {
       dispatch(getTripsSuccess(response));
     })
     .catch((error) => {
-      dispatch(getTripsError('Something went wrong'));
+      dispatch(getTripsError('Something went wrong!'));
       return Promise.reject({});
     });
 };

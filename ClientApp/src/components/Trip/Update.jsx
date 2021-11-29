@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 export class Update extends Component {
@@ -23,8 +23,9 @@ export class Update extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    axios.get(`api/Trips/SingleTrip/${id}`).then((result) => {
-      const response = result.data;
+    axios.get('api/Trips/SingleTrip/' + id).then((trip) => {
+      const response = trip.data;
+
       this.setState({
         name: response.name,
         description: response.description,
@@ -79,7 +80,7 @@ export class Update extends Component {
         : null
     };
 
-    axios.put(`api/Trips/UpdateTrip/${id}`, tripObject).then((result) => {
+    axios.put('api/Trips/UpdateTrip/' + id, tripObject).then((result) => {
       history.push('/trips');
     });
   }
@@ -135,10 +136,10 @@ export class Update extends Component {
           </div>
 
           <div className="form-group">
-            <button onClick={this.onUpdateCancel} className={'btn btn-default'}>
+            <button onClick={this.onUpdateCancel} className="btn btn-default">
               Cancel
             </button>
-            <button type="submit" className={'btn btn-success'}>
+            <button type="submit" className="btn btn-success">
               Update
             </button>
           </div>

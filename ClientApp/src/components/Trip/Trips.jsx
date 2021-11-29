@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getAllTrips } from '../../actions/tripActions';
@@ -22,25 +22,25 @@ export class Trips extends Component {
     this.props.getAllTrips();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.trips.data !== this.props.trips.data) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.trips.data != this.props.trips.data) {
       this.setState({ trips: this.props.trips.data });
     }
   }
 
   onTripUpdate(id) {
     const { history } = this.props;
-    history.push(`/update/${id}`);
+    history.push('/update/' + id);
   }
 
   onTripDelete(id) {
     const { history } = this.props;
-    history.push(`/delete/${id}`);
+    history.push('/delete/' + id);
   }
 
   renderAllTripsTable(trips) {
     return (
-      <table className={'table table-striped'}>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Name</th>
@@ -51,48 +51,43 @@ export class Trips extends Component {
           </tr>
         </thead>
         <tbody>
-          {trips.map((trip) => {
-            return (
-              <tr key={trip.id}>
-                <td>{trip.name}</td>
-                <td>{trip.description}</td>
-                <td>{new Date(trip.dateStarted).toISOString().slice(0, 10)}</td>
-                <td>
-                  {trip.dateCompleted
-                    ? new Date(trip.dateCompleted).toISOString().slice(0, 10)
-                    : ' - '}
-                </td>
-                <td>
-                  <div className="form-group">
-                    <button onClick={() => this.onTripUpdate(trip.id)} className="btn btn-success">
-                      Update
-                    </button>
-                    <button onClick={() => this.onTripDelete(trip.id)} className="btn btn-danger">
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {trips.map((trip) => (
+            <tr key={trip.id}>
+              <td>{trip.name}</td>
+              <td>{trip.description}</td>
+              <td>{new Date(trip.dateStarted).toISOString().slice(0, 10)}</td>
+              <td>
+                {trip.dateCompleted ? new Date(trip.dateCompleted).toISOString().slice(0, 10) : '-'}
+              </td>
+              <td>
+                <div className="form-group">
+                  <button onClick={() => this.onTripUpdate(trip.id)} className="btn btn-success">
+                    Update
+                  </button>
+                  <button onClick={() => this.onTripDelete(trip.id)} className="btn btn-danger">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );
   }
 
   render() {
-    /*let content = this.state.loading ? (
-      <p>
-        <em>Loading...</em>
-      </p>
-    ) : this.state.failed ? (
-      <div className={'text-danger'}>
-        <em>{this.state.error}</em>
-      </div>
-    ) : (
-      this.renderAllTripsTable(this.state.trips)
-    );*/
-
+    // let content = this.state.loading ? (
+    //     <p>
+    //         <em>Loading...</em>
+    //     </p>
+    // ) : ( this.state.failed ? (
+    //     <div className="text-danger">
+    //         <em>{this.state.error}</em>
+    //     </div>
+    // ) : (
+    //     this.renderAllTripsTable(this.state.trips))
+    // )
     let content = this.props.trips.loading ? (
       <p>
         <em>Loading...</em>
